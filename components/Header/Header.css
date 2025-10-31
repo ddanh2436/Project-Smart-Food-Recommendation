@@ -1,0 +1,106 @@
+/* Thiết lập font chữ chung */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  margin: 0;
+}
+
+/* Container chính của Header */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem; /* Tăng padding cho rộng rãi */
+  border-bottom: 1px solid #e0e0e0; /* Viền mỏng bên dưới */
+  background-color: #ffffff;
+  width: 100%;
+  box-sizing: border-box; /* Đảm bảo padding không làm vỡ layout */
+}
+
+/* 1. Phần Logo (Bên trái) */
+.header-logo a {
+  text-decoration: none;
+  color: #333;
+  font-size: 1.8rem; /* Tăng kích thước logo */
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+/* Mô phỏng phần icon grid màu đỏ */
+.header-logo .logo-icon {
+  color: #d9001b; /* Màu đỏ đặc trưng */
+  margin-right: 4px;
+  /* Trong thực tế, đây sẽ là một thẻ <img> hoặc <svg> */
+}
+
+/* Phần text 'atlas' có gạch chân */
+.header-logo .logo-text {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 2px;
+}
+
+/* 2. Phần Điều hướng (Giữa) */
+.header-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1.75rem; /* Khoảng cách giữa các mục */
+}
+
+.header-nav li {
+  display: inline-block;
+}
+
+.header-nav a {
+  text-decoration: none;
+  color: #4a4a4a;
+  font-size: 0.95rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem; /* Khoảng cách giữa text và mũi tên */
+  transition: color 0.2s ease;
+}
+
+.header-nav a:hover {
+  color: #000;
+}
+
+/* Tùy chỉnh icon mũi tên */
+.header-nav svg {
+  width: 14px;
+  height: 14px;
+  stroke: #777;
+}
+
+/* 3. Phần Đăng nhập (Bên phải) */
+.header-login a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.header-login a:hover {
+  color: #000;
+}
+
+.header-login svg {
+  width: 20px;
+  height: 20px;
+  stroke: #555;
+}
+
+.header-login {
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+}
