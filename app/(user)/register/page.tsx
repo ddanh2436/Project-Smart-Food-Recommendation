@@ -1,14 +1,13 @@
 "use client";
 
-import LoginPage from "../login/page";
+import RegisterPage from "@/components/RegisterPage/RegisterPage";
 
-const RegisterPage: React.FC = () => {
+const Register: React.FC = () => {
   return (
     <div>
-      <h1>Register</h1>
-      {/* Form đăng ký sẽ được thêm vào đây */}
+      <RegisterPage />
     </div>
   );
 };
 
-export default RegisterPage;
+export default Register;
