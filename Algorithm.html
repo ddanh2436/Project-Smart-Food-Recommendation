@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Các Thuật Toán Tối Ưu Hóa Lộ Trình</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #212529;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        h1, h2, h3, h4 {
+            color: #343a40;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        h1 {
+            border-bottom: 2px solid #ced4da;
+            padding-bottom: 10px;
+        }
+        h2 {
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 5px;
+        }
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        ul, ol {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        ul ul, ol ol, ul ol, ol ul {
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid #ced4da;
+            margin: 2em 0;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Các Thuật Toán Tối Ưu Hóa Lộ Trình</h1>
+
+    <p>Tài liệu này nghiên cứu các thuật toán và phương pháp giải quyết vấn đề tìm đường đi ngắn nhất, một phần của "Bài toán Người bán hàng" (Travelling Salesman Problem - TSP).</p>
+
+    <h2>Mục lục</h2>
+    <ol>
+        <li><a href="#1-thuật-toán-dijkstra">Thuật toán Dijkstra</a></li>
+        <li><a href="#2-thuật-toán-a-a-star">Thuật toán A* (A-star)</a></li>
+        <li><a href="#3-bài-toán-người-bán-hàng-travelling-salesman-problem---tsp">Bài toán Người bán hàng (TSP) và Heuristics</a></li>
+    </ol>
+
+    <hr>
+
+    <h2 id="1-thuật-toán-dijkstra">1. Thuật toán Dijkstra</h2>
+
+    <p>Thuật toán Dijkstra (đọc là "Đai-sờ-tra") là một thuật toán tham lam (greedy algorithm) dùng để tìm đường đi ngắn nhất giữa <strong>một điểm xuất phát</strong> và <strong>tất cả các điểm còn lại</strong> trong một đồ thị có trọng số cạnh không âm.</p>
+
+    <h3>Nguyên lý hoạt động</h3>
+    <ol>
+        <li>
+            <strong>Khởi tạo:</strong>
+            <ul>
+                <li>Tạo một tập hợp <code>visited</code> (để lưu các đỉnh đã xét) và một tập hợp <code>unvisited</code> (chứa tất cả các đỉnh).</li>
+                <li>Đặt khoảng cách (distance) từ đỉnh xuất phát <code>S</code> đến chính nó là <code>0</code>.</li>
+                <li>Đặt khoảng cách đến tất cả các đỉnh khác là <code>Vô cực</code> (&infin;).</li>
+            </ul>
+        </li>
+        <li>
+            <strong>Lặp (Trong khi <code>unvisited</code> không rỗng):</strong>
+            <ul>
+                <li>Chọn đỉnh <code>U</code> trong <code>unvisited</code> có khoảng cách ngắn nhất (lúc đầu sẽ là <code>S</code>).</li>
+                <li>Với mỗi "hàng xóm" <code>V</code> của <code>U</code>:
+                    <ul>
+                        <li>Tính khoảng cách mới: <code>distance(S, U) + weight(U, V)</code>.</li>
+                        <li>Nếu khoảng cách mới này <strong>ngắn hơn</strong> khoảng cách hiện tại <code>distance(S, V)</code>: Cập nhật <code>distance(S, V)</code> = khoảng cách mới.</li>
+                    </ul>
+                </li>
+                <li>Di chuyển <code>U</code> từ <code>unvisited</code> sang <code>visited</code>.</li>
+            </ul>
+        </li>
+        <li><strong>Kết thúc:</strong> Khi tất cả các đỉnh đã được thăm (hoặc khi đã tìm thấy đỉnh đích), thuật toán kết thúc. Mảng khoảng cách chứa đường đi ngắn nhất từ <code>S</code> đến mọi đỉnh.</li>
+    </ol>
+
+    <h3>Ưu điểm</h3>
+    <ul>
+        <li><strong>Tối ưu:</strong> Đảm bảo tìm được đường đi ngắn nhất tuyệt đối (tối ưu) nếu trọng số cạnh không âm.</li>
+        <li><strong>Linh hoạt:</strong> Không chỉ tìm đường đến 1 điểm, nó tìm đường đến tất cả các điểm khác từ điểm xuất phát.</li>
+    </ul>
+
+    <h3>Nhược điểm</h3>
+    <ul>
+        <li><strong>Không hiệu quả:</strong> Thuật toán "mù quáng" tìm kiếm theo mọi hướng. Nó không biết gì về vị trí của điểm đích, nên nó có thể tốn thời gian khám phá các nhánh rõ ràng là đi sai hướng.</li>
+        <li><strong>Yêu cầu:</strong> Không hoạt động chính xác nếu đồ thị có trọng số cạnh âm.</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="2-thuật-toán-a-a-star">2. Thuật toán A* (A-star)</h2>
+
+    <p>Thuật toán A* là một phiên bản <strong>cải tiến thông minh</strong> của Dijkstra. Nó cũng tìm đường đi ngắn nhất, nhưng nó ưu tiên tìm kiếm các đường đi có vẻ "hứa hẹn" sẽ dẫn đến đích.</p>
+
+    <h3>Nguyên lý hoạt động</h3>
+    <p>A* hoạt động giống Dijkstra, nhưng khi chọn đỉnh <code>U</code> tiếp theo để xét, nó không chỉ dựa vào chi phí đã đi, mà dựa vào một hàm đánh giá <code>f(n)</code>:</p>
+
+    <p><strong><code>f(n) = g(n) + h(n)</code></strong></p>
+
+    <p>Trong đó:</p>
+    <ul>
+        <li><code>n</code>: Là đỉnh đang xét.</li>
+        <li><code>g(n)</code>: (Giống Dijkstra) Chi phí thực tế để đi từ điểm xuất phát đến <code>n</code>.</li>
+        <li><code>h(n)</code>: (Điểm mấu chốt) Chi phí <strong>ước tính</strong> (heuristic) từ <code>n</code> đến điểm đích. Đây là "phỏng đoán" của thuật toán về chi phí còn lại.</li>
+        <li><code>f(n)</code>: Tổng chi phí (thực tế + ước tính).</li>
+    </ul>
+    <p>Thuật toán A* sẽ luôn ưu tiên xét đỉnh <code>n</code> có <code>f(n)</code> thấp nhất.</p>
+    <p>Hàm <code>h(n)</code> (heuristic) phải là một hàm <strong>ước tính chấp nhận được</strong> (admissible), nghĩa là nó không bao giờ được ước tính "quá" chi phí thực tế (ví dụ: <code>h(n)</code> là khoảng cách đường chim bay, vì không có đường nào ngắn hơn đường chim bay).</p>
+
+    <h3>Ưu điểm</h3>
+    <ul>
+        <li><strong>Hiệu quả:</strong> Thông minh hơn Dijkstra rất nhiều. Nó tập trung vào hướng có điểm đích, giúp giảm đáng kể số lượng đỉnh phải xét.</li>
+        <li><strong>Tối ưu:</strong> Giống Dijkstra, A* vẫn đảm bảo tìm được đường đi ngắn nhất nếu hàm <code>h(n)</code> là "chấp nhận được".</li>
+    </ul>
+
+    <h3>Nhược điểm</h3>
+    <ul>
+        <li><strong>Độ phức tạp:</strong> Phụ thuộc nhiều vào chất lượng của hàm heuristic <code>h(n)</code>.</li>
+        <li><strong>Bộ nhớ:</strong> Cần lưu trữ nhiều thông tin về các đỉnh đã mở, có thể tốn bộ nhớ.</li>
+    </ul>
+
+    <hr>
+
+    <h2 id="3-bài-toán-người-bán-hàng-travelling-salesman-problem---tsp">3. Bài toán Người bán hàng (Travelling Salesman Problem - TSP)</h2>
+
+    <h3>Vấn đề</h3>
+    <p>TSP là một bài toán kinh điển: "Cho một danh sách các thành phố và khoảng cách giữa chúng, tìm lộ trình ngắn nhất đi qua <strong>TẤT CẢ</strong> các thành phố, mỗi thành phố <strong>đúng một lần</strong>, và quay về điểm xuất phát."</p>
+    <p>Vấn đề của TSP là nó thuộc lớp bài toán <strong>NP-hard</strong>.</p>
+
+    <h3>Tại sao lại là NP-hard?</h3>
+    <p>"NP-hard" có nghĩa là không có thuật toán "hiệu quả" (chạy trong thời gian đa thức) nào được biết đến để giải quyết nó một cách tối ưu.</p>
+    <ul>
+        <li>Với 5 thành phố, có (5-1)! / 2 = 12 lộ trình.</li>
+        <li>Với 10 thành phố, có (10-1)! / 2 = 181,440 lộ trình.</li>
+        <li>Với 20 thành phố, có ~1.2 x 10¹⁷ (120 triệu tỷ) lộ trình.</li>
+    </ul>
+    <p>Việc kiểm tra tất cả các khả năng (brute-force) là không thể đối với máy tính hiện đại khi số lượng thành phố tăng lên.</p>
+
+    <h3>Các phương pháp giải quyết (Heuristics)</h3>
+    <p>Vì không thể tìm giải pháp tối ưu một cách nhanh chóng, chúng ta chấp nhận tìm các giải pháp "đủ tốt" bằng các thuật toán Heuristic (xấp xỉ).</p>
+
+    <h4>1. Thuật toán Tham lam (Nearest Neighbour - Hàng xóm gần nhất)</h4>
+    <ul>
+        <li><strong>Nguyên lý:</strong> Đơn giản nhất. Tại một thành phố, luôn đi đến thành phố <strong>gần nhất mà chưa được thăm</strong>.</li>
+        <li><strong>Ưu điểm:</strong> Rất nhanh.</li>
+        <li><strong>Nhược điểm:</strong> Thường cho kết quả rất tệ, không tối ưu (có thể bỏ lỡ một lộ trình tốt hơn nhiều vì một lựa chọn tham lam ở bước đầu).</li>
+    </ul>
+
+    <h4>2. Thuật toán Luyện kim (Simulated Annealing)</h4>
+    <ul>
+        <li><strong>Nguyên lý:</strong> Bắt đầu với một lộ trình ngẫu nhiên. Sau đó, "làm xáo trộn" lộ trình một chút (ví dụ: hoán đổi 2 thành phố).
+            <ul>
+                <li>Nếu lộ trình mới tốt hơn -> chấp nhận nó.</li>
+                <li>Nếu lộ trình mới tệ hơn -> vẫn có thể chấp nhận nó với một xác suất nhất định (xác suất này giảm dần theo thời gian).</li>
+            </ul>
+        </li>
+        <li><strong>Ưu điểm:</strong> Giúp thuật toán "thoát" khỏi các điểm "tối ưu cục bộ" (local optima) - những giải pháp có vẻ tốt nhưng không phải tốt nhất.</li>
+        <li><strong>Nhược điểm:</strong> Cần tinh chỉnh nhiều tham số (nhiệt độ ban đầu, tỷ lệ làm nguội...).</li>
+    </ul>
+
+    <h4>3. Thuật toán Kiến (Ant Colony Optimization)</h4>
+    <ul>
+        <li><strong>Nguyên lý:</strong> Mô phỏng cách đàn kiến tìm đường. Kiến đi và để lại "pheromone" (mùi). Đường đi ngắn hơn sẽ được nhiều kiến đi qua hơn, tích tụ nhiều mùi hơn, và do đó, hấp dẫn nhiều kiến hơn nữa.</li>
+        <li><strong>Ưu điểm:</strong> Hoạt động tốt cho các bài toán TSP động (khi khoảng cách có thể thay đổi).</li>
+        <li><strong>Nhược điểm:</strong> Phức tạp để triển khai.</li>
+    </ul>
+
+</body>
+</html>
