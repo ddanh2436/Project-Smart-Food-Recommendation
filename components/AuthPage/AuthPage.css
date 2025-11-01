@@ -19,12 +19,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-
-  /* Cập nhật đường dẫn này thành ảnh của bạn (ví dụ: /login-background.jpg) */
   background-image: url("https://images.unsplash.com/photo-1597345637412-9fd611e758f3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170");
   background-size: cover;
   background-position: center;
-  opacity: 0.5; /* Opacity của nền */
+  opacity: 0.5;
   z-index: -1;
 }
 /* --- KẾT THÚC PHẦN NỀN --- */
@@ -36,9 +34,9 @@
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.05);
   position: relative;
   overflow: hidden;
-  width: 768px;
+  width: 900px;
   max-width: 90%;
-  min-height: 480px;
+  min-height: 580px;
 }
 
 /* Container cho mỗi form (Login và Register) */
@@ -68,13 +66,12 @@
   border-bottom-right-radius: 150px;
 }
 
-/* --- (Các kiểu form còn lại giữ nguyên) --- */
 .form-container form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 40px;
+  padding: 0 50px;
   height: 100%;
   text-align: center;
 }
@@ -110,12 +107,10 @@
   border-radius: 50%;
   color: #333;
   text-decoration: none;
-  /* Thêm 'color' và 'background-color' vào transition */
   transition: background-color 0.3s ease, border-color 0.3s ease,
-    color 0.3s ease;
+    color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Icon Google (FcGoogle) cần lớn hơn một chút để vừa vặn */
 .social-icon svg {
   font-size: 20px;
 }
@@ -126,7 +121,8 @@
   margin-bottom: 15px;
 }
 
-.input-group svg {
+/* Icon bên trái (Lock, User, Env) */
+.input-group > svg {
   position: absolute;
   left: 15px;
   top: 50%;
@@ -137,18 +133,23 @@
 
 .input-group input {
   width: 100%;
-  padding: 12px 15px 12px 45px;
+  padding: 12px 45px 12px 45px;
   background-color: #eee;
   border: none;
   border-radius: 5px;
   box-sizing: border-box;
+  color: #333;
 }
 
 .forgot-password {
-  color: #555;
+  color: #111;
   font-size: 14px;
   text-decoration: none;
   margin: 15px 0 20px;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
 }
 
 /* Nút màu cam */
@@ -175,12 +176,43 @@
   outline: none;
 }
 
-.ghost-button {
-  background-color: transparent;
-  border-color: #ffffff;
+.auth-button:hover {
+  background-color: #ff9800;
+  border-color: #ff9800;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
-/* --- Phần Overlay (chìa khóa của hiệu ứng) --- */
+/* --- SỬA LỖI Ở ĐÂY --- */
+/* Đây là nút trên panel màu cam */
+.ghost-button {
+  border-radius: 20px;
+  border: 1px solid #ffffff; /* Viền trắng */
+  background-color: transparent; /* Nền trong suốt */
+  color: #ffffff; /* Chữ trắng */
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.ghost-button:active {
+  transform: scale(0.95);
+}
+
+.ghost-button:focus {
+  outline: none;
+}
+
+.ghost-button:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Hiệu ứng hover nhẹ */
+}
+/* --- KẾT THÚC SỬA LỖI --- */
+
+/* --- Phần Overlay --- */
 .overlay-container {
   position: absolute;
   top: 0;
@@ -218,7 +250,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 40px;
+  padding: 0 50px;
   height: 100%;
   width: 50%;
   text-align: center;
@@ -227,7 +259,7 @@
 }
 
 .overlay-panel h1 {
-  font-weight: 800; /* Đã chỉnh to và đậm hơn */
+  font-weight: 800;
   margin: 0;
   margin-bottom: 10px;
   font-size: 36px;
@@ -250,7 +282,7 @@
   transform: translateX(0);
 }
 
-/* --- PHẦN KÍCH HOẠT HIỆU ỨNG (QUAN TRỌNG) --- */
+/* --- PHẦN KÍCH HOẠT HIỆU ỨNG --- */
 .auth-container.register-active .sign-in-container {
   transform: translateX(100%);
   opacity: 0;
@@ -308,6 +340,7 @@
   font-family: "Nunito", sans-serif;
 }
 
+/* --- CSS BỔ SUNG ĐỂ XỬ LÝ FORM --- */
 .error-message {
   color: #e60023; /* Màu đỏ */
   font-size: 12px;
@@ -319,39 +352,46 @@
   padding-left: 5px;
 }
 
-/* 2. Style cho icon mắt (Show/Hide Password) */
+/* Style cho icon mắt (Show/Hide Password) */
 .input-group .eye-icon {
   position: absolute;
   right: 15px;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-140%);
   cursor: pointer;
-  color: #888;
+  color: #111;
   font-size: 16px;
+  display: flex;
+  align-items: center;
 }
 
-/* 3. Dành không gian cho icon mắt trong ô input */
-.input-group input {
-  padding-right: 45px !important;
-}
-
-/* 4. Style cho nút khi bị vô hiệu hóa (Loading) */
 .auth-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
 
-/* --- (MỚI) HIỆU ỨNG HOVER CHO ICON --- */
-
-/* 1. Facebook Hover */
+/* --- HIỆU ỨNG HOVER CHO ICON --- */
 .social-icon.facebook-hover:hover {
-  background-color: #3b5998; /* Màu xanh Facebook */
+  background-color: #3b5998;
   border-color: #3b5998;
-  color: #ffffff; /* Đổi icon (FaFacebookF) sang màu trắng */
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 2. Google Hover (chỉ đổi nền, giữ icon đa màu) */
 .social-icon.google-hover:hover {
-  background-color: #f6f6f6; /* Nền xám nhạt */
+  background-color: #ffffff;
   border-color: #ddd;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.auth-logo {
+  margin-bottom: 15px; /* Tạo khoảng cách với chữ "Sign In" */
+}
+
+/* Tùy chỉnh kích thước ảnh bên trong (nếu cần) */
+.auth-logo img {
+  max-width: 150px; /* Giới hạn chiều rộng tối đa */
+  height: auto; /* Giữ tỷ lệ */
 }

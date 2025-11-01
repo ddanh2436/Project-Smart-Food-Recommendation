@@ -2,16 +2,17 @@
 
 import React, { useState } from "react";
 import "./AuthPage.css";
+import Image from "next/image"; // 1. Import Image từ Next.js
 
 import {
   FaUser,
   FaEnvelope,
   FaLock,
-  FaFacebookF, // Giữ icon Facebook
+  FaFacebookF,
   FaEye,
   FaEyeSlash,
 } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc"; // 1. Import FcGoogle (icon đa màu)
+import { FcGoogle } from "react-icons/fc";
 
 const AuthForm: React.FC = () => {
   // --- State cho Form ---
@@ -19,11 +20,11 @@ const AuthForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // State cho dữ liệu input
-  const [name, setName] = useState(""); // Dù bạn đã xóa input, tôi vẫn giữ state này
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  
+
   // State cho lỗi validation
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -36,7 +37,6 @@ const AuthForm: React.FC = () => {
   // Hàm chuyển đổi form (Login/Register)
   const toggleForm = (isRegister: boolean) => {
     setIsRegisterActive(isRegister);
-    // Xóa tất cả lỗi và dữ liệu cũ khi chuyển form
     setErrors({});
     setName("");
     setEmail("");
@@ -45,15 +45,12 @@ const AuthForm: React.FC = () => {
     setIsLoading(false);
   };
 
-  // Hàm kiểm tra lỗi (Validation) - Dựa trên file của bạn (không có 'name')
+  // Hàm kiểm tra lỗi (Validation)
   const validate = (isRegisterForm: boolean) => {
     const newErrors: { [key: string]: string } = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Bỏ qua validate 'name' vì đã bị xóa khỏi form
-    // if (isRegisterForm && !name) {
-    //   newErrors.name = "Vui lòng nhập tên của bạn";
-    // }
+    // Bỏ qua validate 'name'
     if (!email) {
       newErrors.email = "Vui lòng nhập email";
     } else if (!emailRegex.test(email)) {
@@ -84,7 +81,6 @@ const AuthForm: React.FC = () => {
       return;
     }
 
-    // Nếu không có lỗi -> bắt đầu tải
     setErrors({});
     setIsLoading(true);
 
@@ -98,7 +94,7 @@ const AuthForm: React.FC = () => {
         console.log("Đăng nhập thành công!");
       }
       toggleForm(isRegisterForm);
-    }, 2000); // Giả lập 2 giây loading
+    }, 2000);
   };
 
   return (
@@ -112,7 +108,7 @@ const AuthForm: React.FC = () => {
         <div className="form-container sign-up-container">
           <form onSubmit={(e) => handleSubmit(e, true)}>
             <h1>Create Account</h1>
-      
+
             {/* Input Email */}
             <div className="input-group">
               <FaEnvelope />
@@ -124,7 +120,9 @@ const AuthForm: React.FC = () => {
                 disabled={isLoading}
               />
             </div>
-            {errors.email && <div className="error-message">{errors.email}</div>}
+            {errors.email && (
+              <div className="error-message">{errors.email}</div>
+            )}
 
             {/* Input Mật khẩu */}
             <div className="input-group">
@@ -136,11 +134,16 @@ const AuthForm: React.FC = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
               />
-              <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+              <span
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            {errors.password && <div className="error-message">{errors.password}</div>}
+            {errors.password && (
+              <div className="error-message">{errors.password}</div>
+            )}
 
             {/* Ô CONFIRM PASSWORD */}
             <div className="input-group">
@@ -152,21 +155,27 @@ const AuthForm: React.FC = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 disabled={isLoading}
               />
-              <span className="eye-icon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              <span
+                className="eye-icon"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            {errors.confirmPassword && <div className="error-message">{errors.confirmPassword}</div>}
-
+            {errors.confirmPassword && (
+              <div className="error-message">{errors.confirmPassword}</div>
+            )}
 
             {/* Social (để sau input cho hợp lý) */}
             <div className="social-container">
-              {/* 2. Thêm className 'facebook-hover' */}
-              <a href="#" className="social-icon facebook-hover"><FaFacebookF /></a>
-              {/* 2. Thêm 'google-hover' và đổi sang FcGoogle */}
-              <a href="#" className="social-icon google-hover"><FcGoogle /></a>
+              <a href="#" className="social-icon facebook-hover">
+                <FaFacebookF />
+              </a>
+              <a href="#" className="social-icon google-hover">
+                <FcGoogle />
+              </a>
             </div>
-            <span>or use your email for registration</span>
+            <span>or use your account for registration</span>
 
             {/* Nút Submit */}
             <button type="submit" className="auth-button" disabled={isLoading}>
@@ -191,7 +200,9 @@ const AuthForm: React.FC = () => {
                 disabled={isLoading}
               />
             </div>
-            {errors.email && <div className="error-message">{errors.email}</div>}
+            {errors.email && (
+              <div className="error-message">{errors.email}</div>
+            )}
 
             {/* Input Mật khẩu */}
             <div className="input-group">
@@ -200,24 +211,34 @@ const AuthForm: React.FC = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
+                /* --- SỬA LỖI Ở ĐÂY --- */
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
               />
-              <span className="eye-icon" onClick={() => setShowPassword(!showPassword)}>
+              <span
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            {errors.password && <div className="error-message">{errors.password}</div>}
+            {errors.password && (
+              <div className="error-message">{errors.password}</div>
+            )}
 
             {/* Social */}
             <div className="social-container">
-              {/* 2. Thêm className 'facebook-hover' */}
-              <a href="#" className="social-icon facebook-hover"><FaFacebookF /></a>
-              {/* 2. Thêm 'google-hover' và đổi sang FcGoogle */}
-              <a href="#" className="social-icon google-hover"><FcGoogle /></a>
+              <a href="#" className="social-icon facebook-hover">
+                <FaFacebookF />
+              </a>
+              <a href="#" className="social-icon google-hover">
+                <FcGoogle />
+              </a>
             </div>
 
-            <a href="#" className="forgot-password">Forgot your password?</a>
+            <a href="#" className="forgot-password">
+              Forgot your password?
+            </a>
 
             {/* Nút Submit */}
             <button type="submit" className="auth-button" disabled={isLoading}>
@@ -230,22 +251,21 @@ const AuthForm: React.FC = () => {
         <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-left">
-              <h1>Welcome Back!</h1>
-              <p>To keep connected with us please login with your personal info</p>
+              <h1>Welcome!</h1>
+              <p>
+                To keep connected with us please login with your personal info
+              </p>
               <button
                 className="ghost-button"
-                onClick={() => toggleForm(false)} // Cập nhật
+                onClick={() => toggleForm(false)}
               >
                 Sign In
               </button>
             </div>
             <div className="overlay-panel overlay-right">
-              <h1>Hello, Friend!</h1>
+              <h1>Hello</h1>
               <p>Enter your personal details and start journey with us</p>
-              <button
-                className="ghost-button"
-                onClick={() => toggleForm(true)} // Cập nhật
-              >
+              <button className="ghost-button" onClick={() => toggleForm(true)}>
                 Sign Up
               </button>
             </div>
