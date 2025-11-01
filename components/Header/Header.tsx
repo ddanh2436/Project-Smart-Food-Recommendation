@@ -63,7 +63,7 @@ const navItems: NavItem[] = [
 const Header: React.FC = () => {
   const router = useRouter();
   const handleLoginClick = () => {
-    router.push("/login"); // 4. Điều hướng đến trang /login
+    router.push("/auth"); // 4. Điều hướng đến trang /auth
   };
 
   return (

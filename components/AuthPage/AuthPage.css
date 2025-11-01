@@ -1,0 +1,308 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+/* Container cho cả trang, dùng để căn giữa */
+.auth-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: "Nunito", sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+/* --- THÊM NỀN BACKGROUND VỚI OPACITY Ở ĐÂY --- */
+.auth-page-container::before {
+  content: ""; /* Bắt buộc */
+  position: absolute; /* Đặt làm nền */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-image: url("https://images.unsplash.com/photo-1597345637412-9fd611e758f3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"); /* 1. ĐỔI ẢNH NỀN Ở ĐÂY */
+  background-size: cover;
+  background-position: center;
+
+  /* 2. CHỈNH OPACITY của nền ở đây (ví dụ: 0.5 = 50%) */
+  opacity: 0.5;
+
+  /* Đảm bảo nền nằm sau form */
+  z-index: -1;
+}
+/* --- KẾT THÚC PHẦN NỀN --- */
+
+/* Container chính của form */
+.auth-container {
+  background-color: #ffffff;
+  border-radius: 150px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+  width: 768px;
+  max-width: 90%;
+  min-height: 480px;
+}
+
+/* Container cho mỗi form (Login và Register) */
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+  background-color: #ffffff;
+}
+
+/* --- Cấu hình vị trí cho 2 form --- */
+.sign-in-container {
+  left: 0;
+  width: 50%;
+  z-index: 2;
+  border-top-right-radius: 150px;
+  border-bottom-right-radius: 150px;
+}
+
+.sign-up-container {
+  left: 0;
+  width: 50%;
+  opacity: 0;
+  z-index: 1;
+  border-top-right-radius: 150px;
+  border-bottom-right-radius: 150px;
+}
+
+/* --- (Các kiểu form còn lại giữ nguyên) --- */
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+  height: 100%;
+  text-align: center;
+}
+
+.form-container h1 {
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 28px;
+}
+
+.form-container span {
+  font-size: 12px;
+  color: #555;
+  margin: 15px 0;
+}
+
+.social-container {
+  display: flex;
+  gap: 10px;
+  margin: 15px 0 25px;
+}
+
+.social-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5px;
+  height: 40px;
+  width: 40px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: #f6f6f6;
+  border-color: #ccc;
+}
+
+.input-group {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.input-group svg {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 16px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 15px 12px 45px;
+  background-color: #eee;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.forgot-password {
+  color: #555;
+  font-size: 14px;
+  text-decoration: none;
+  margin: 15px 0 20px;
+}
+
+/* Nút màu cam */
+.auth-button {
+  border-radius: 20px;
+  border: 1px solid #f57c00;
+  background-color: #f57c00;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.auth-button:active {
+  transform: scale(0.95);
+}
+
+.auth-button:focus {
+  outline: none;
+}
+
+.ghost-button {
+  background-color: transparent;
+  border-color: #ffffff;
+}
+
+/* --- Phần Overlay (chìa khóa của hiệu ứng) --- */
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+  border-top-left-radius: 150px;
+  border-bottom-left-radius: 150px;
+}
+
+/* Panel màu cam */
+.overlay {
+  background: #f57c00;
+  background: linear-gradient(to right, #ffa726, #f57c00);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 0;
+  color: #ffffff;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+  border-radius: 150px;
+}
+
+.overlay-panel {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+  height: 100%;
+  width: 50%;
+  text-align: center;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay-panel h1 {
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.overlay-panel p {
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  margin: 15px 0 25px;
+}
+
+.overlay-left {
+  transform: translateX(-20%);
+}
+.overlay-right {
+  right: 0;
+  transform: translateX(0);
+}
+
+/* --- PHẦN KÍCH HOẠT HIỆU ỨNG (QUAN TRỌNG) --- */
+.auth-container.register-active .sign-in-container {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.auth-container.register-active .sign-up-container {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 5;
+  animation: show 0.6s;
+}
+
+.auth-container.register-active .overlay-container {
+  transform: translateX(-100%);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 150px;
+  border-bottom-right-radius: 150px;
+}
+
+.auth-container.register-active .overlay {
+  transform: translateX(50%);
+}
+
+.auth-container.register-active .overlay-left {
+  transform: translateX(0);
+}
+.auth-container.register-active .overlay-right {
+  transform: translateX(20%);
+}
+
+@keyframes show {
+  0%,
+  49.99% {
+    opacity: 0;
+    z-index: 1;
+  }
+  50%,
+  100% {
+    opacity: 1;
+    z-index: 5;
+  }
+}
+
+/* Sửa lỗi placeholder bị mờ */
+.input-group input::placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+/* Đảm bảo đồng bộ font */
+.input-group input,
+.auth-button,
+.ghost-button {
+  font-family: "Nunito", sans-serif;
+}
