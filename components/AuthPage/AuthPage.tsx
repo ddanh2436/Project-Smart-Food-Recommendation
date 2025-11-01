@@ -7,11 +7,11 @@ import {
   FaUser,
   FaEnvelope,
   FaLock,
-  FaGoogle,
-  FaFacebookF,
-  FaEye, // 1. Import icon mới
-  FaEyeSlash, // 1. Import icon mới
+  FaFacebookF, // Giữ icon Facebook
+  FaEye,
+  FaEyeSlash,
 } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc"; // 1. Import FcGoogle (icon đa màu)
 
 const AuthForm: React.FC = () => {
   // --- State cho Form ---
@@ -19,7 +19,7 @@ const AuthForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // State cho dữ liệu input
-  const [name, setName] = useState("");
+  const [name, setName] = useState(""); // Dù bạn đã xóa input, tôi vẫn giữ state này
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -45,14 +45,15 @@ const AuthForm: React.FC = () => {
     setIsLoading(false);
   };
 
-  // Hàm kiểm tra lỗi (Validation)
+  // Hàm kiểm tra lỗi (Validation) - Dựa trên file của bạn (không có 'name')
   const validate = (isRegisterForm: boolean) => {
     const newErrors: { [key: string]: string } = {};
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (isRegisterForm && !name) {
-      newErrors.name = "Vui lòng nhập tên của bạn";
-    }
+    // Bỏ qua validate 'name' vì đã bị xóa khỏi form
+    // if (isRegisterForm && !name) {
+    //   newErrors.name = "Vui lòng nhập tên của bạn";
+    // }
     if (!email) {
       newErrors.email = "Vui lòng nhập email";
     } else if (!emailRegex.test(email)) {
@@ -88,7 +89,6 @@ const AuthForm: React.FC = () => {
     setIsLoading(true);
 
     // --- Giả lập gọi API ---
-    // (Trong dự án thật, bạn sẽ gọi API đăng nhập/đăng ký ở đây)
     console.log("Đang gửi dữ liệu:", { name, email, password });
     setTimeout(() => {
       setIsLoading(false);
@@ -97,7 +97,6 @@ const AuthForm: React.FC = () => {
       } else {
         console.log("Đăng nhập thành công!");
       }
-      // Reset form sau khi thành công
       toggleForm(isRegisterForm);
     }, 2000); // Giả lập 2 giây loading
   };
@@ -143,7 +142,7 @@ const AuthForm: React.FC = () => {
             </div>
             {errors.password && <div className="error-message">{errors.password}</div>}
 
-            {/* 2. THÊM Ô CONFIRM PASSWORD */}
+            {/* Ô CONFIRM PASSWORD */}
             <div className="input-group">
               <FaLock />
               <input
@@ -162,8 +161,10 @@ const AuthForm: React.FC = () => {
 
             {/* Social (để sau input cho hợp lý) */}
             <div className="social-container">
-              <a href="#" className="social-icon"><FaFacebookF /></a>
-              <a href="#" className="social-icon"><FaGoogle /></a>
+              {/* 2. Thêm className 'facebook-hover' */}
+              <a href="#" className="social-icon facebook-hover"><FaFacebookF /></a>
+              {/* 2. Thêm 'google-hover' và đổi sang FcGoogle */}
+              <a href="#" className="social-icon google-hover"><FcGoogle /></a>
             </div>
             <span>or use your email for registration</span>
 
@@ -210,8 +211,10 @@ const AuthForm: React.FC = () => {
 
             {/* Social */}
             <div className="social-container">
-              <a href="#" className="social-icon"><FaFacebookF /></a>
-              <a href="#" className="social-icon"><FaGoogle /></a>
+              {/* 2. Thêm className 'facebook-hover' */}
+              <a href="#" className="social-icon facebook-hover"><FaFacebookF /></a>
+              {/* 2. Thêm 'google-hover' và đổi sang FcGoogle */}
+              <a href="#" className="social-icon google-hover"><FcGoogle /></a>
             </div>
 
             <a href="#" className="forgot-password">Forgot your password?</a>

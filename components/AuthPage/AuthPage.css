@@ -11,23 +11,20 @@
   position: relative;
 }
 
-/* --- THÊM NỀN BACKGROUND VỚI OPACITY Ở ĐÂY --- */
+/* --- NỀN BACKGROUND VỚI OPACITY --- */
 .auth-page-container::before {
-  content: ""; /* Bắt buộc */
-  position: absolute; /* Đặt làm nền */
+  content: "";
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 
-  background-image: url("https://images.unsplash.com/photo-1597345637412-9fd611e758f3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170"); /* 1. ĐỔI ẢNH NỀN Ở ĐÂY */
+  /* Cập nhật đường dẫn này thành ảnh của bạn (ví dụ: /login-background.jpg) */
+  background-image: url("https://images.unsplash.com/photo-1597345637412-9fd611e758f3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170");
   background-size: cover;
   background-position: center;
-
-  /* 2. CHỈNH OPACITY của nền ở đây (ví dụ: 0.5 = 50%) */
-  opacity: 0.5;
-
-  /* Đảm bảo nền nằm sau form */
+  opacity: 0.5; /* Opacity của nền */
   z-index: -1;
 }
 /* --- KẾT THÚC PHẦN NỀN --- */
@@ -113,12 +110,14 @@
   border-radius: 50%;
   color: #333;
   text-decoration: none;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  /* Thêm 'color' và 'background-color' vào transition */
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease;
 }
 
-.social-icon:hover {
-  background-color: #f6f6f6;
-  border-color: #ccc;
+/* Icon Google (FcGoogle) cần lớn hơn một chút để vừa vặn */
+.social-icon svg {
+  font-size: 20px;
 }
 
 .input-group {
@@ -228,9 +227,11 @@
 }
 
 .overlay-panel h1 {
-  font-weight: bold;
+  font-weight: 800; /* Đã chỉnh to và đậm hơn */
   margin: 0;
   margin-bottom: 10px;
+  font-size: 36px;
+  line-height: 1.2;
 }
 
 .overlay-panel p {
@@ -331,7 +332,6 @@
 
 /* 3. Dành không gian cho icon mắt trong ô input */
 .input-group input {
-  /* Tăng padding bên phải để chữ không đè lên icon */
   padding-right: 45px !important;
 }
 
@@ -339,4 +339,19 @@
 .auth-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
+}
+
+/* --- (MỚI) HIỆU ỨNG HOVER CHO ICON --- */
+
+/* 1. Facebook Hover */
+.social-icon.facebook-hover:hover {
+  background-color: #3b5998; /* Màu xanh Facebook */
+  border-color: #3b5998;
+  color: #ffffff; /* Đổi icon (FaFacebookF) sang màu trắng */
+}
+
+/* 2. Google Hover (chỉ đổi nền, giữ icon đa màu) */
+.social-icon.google-hover:hover {
+  background-color: #f6f6f6; /* Nền xám nhạt */
+  border-color: #ddd;
 }
