@@ -306,3 +306,37 @@
 .ghost-button {
   font-family: "Nunito", sans-serif;
 }
+
+.error-message {
+  color: #e60023; /* Màu đỏ */
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left; /* Căn trái cho rõ ràng */
+  width: 100%;
+  margin-top: -10px; /* Nằm sát input */
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
+/* 2. Style cho icon mắt (Show/Hide Password) */
+.input-group .eye-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 16px;
+}
+
+/* 3. Dành không gian cho icon mắt trong ô input */
+.input-group input {
+  /* Tăng padding bên phải để chữ không đè lên icon */
+  padding-right: 45px !important;
+}
+
+/* 4. Style cho nút khi bị vô hiệu hóa (Loading) */
+.auth-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
